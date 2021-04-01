@@ -1,10 +1,10 @@
 [package]
 authors = ['Pierre Ossun']
-description = 'FRAME Example of Storage.'
+description = 'FRAME Example of Storage. TRACK CAR RENTALS Example'
 edition = '2018'
 homepage = 'https://substrate.dev'
 license = 'Unlicense'
-name = 'pallet-example'
+name = 'pallet-track-car-rental'
 repository = 'https://github.com/substrate-developer-hub/substrate-node-template/'
 version = '3.0.0'
 

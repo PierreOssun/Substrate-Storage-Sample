@@ -270,8 +270,8 @@ parameter_types! {
 }
 
 
-/// Configure the template pallet in pallets/template.
-impl pallet_example::Config for Runtime {
+/// Configure the track car rental pallet in pallets/template.
+impl pallet_track_car_rental::Config for Runtime {
 	type Event = Event;
 	type MaxDrivers = MaxDrivers;
 }
@@ -293,7 +293,7 @@ construct_runtime!(
 		Sudo: pallet_sudo::{Module, Call, Config<T>, Storage, Event<T>},
 		// Include the custom logic from the template pallet in the runtime.
 		TemplateModule: pallet_template::{Module, Call, Storage, Event<T>},
-		ExampleModule: pallet_example::{Module, Call, Storage, Event<T>},
+		TrackCarRentalModule: pallet_track_car_rental::{Module, Call, Storage, Event<T>},
 	}
 );
 

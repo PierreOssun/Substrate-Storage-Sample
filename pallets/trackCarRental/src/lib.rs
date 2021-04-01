@@ -20,7 +20,7 @@ pub trait Config: frame_system::Config {
 }
 
 decl_storage! {
-	trait Store for Module<T: Config> as ExampleModule {
+	trait Store for Module<T: Config> as TrackCarRentalModule {
 		// All cars that has been created
 		Cars get(fn cars): map hasher(blake2_128_concat) u32 => Option<Car>;
 
@@ -39,6 +39,8 @@ decl_event!(
 	pub enum Event<T> where AccountId = <T as frame_system::Config>::AccountId {
 		DriverAdded(AccountId),
 		CarCreated(AccountId, Car),
+		CarSubscribed(AccountId, Car),
+		CarRemovedForDriver(AccountId),
 	}
 );
 
@@ -99,6 +101,7 @@ decl_module! {
 			let new_car = Car { name };
 
 			Cars::insert(current_id, new_car.clone());
+
 			Self::deposit_event(RawEvent::CarCreated(driver, new_car));
 			Ok(())
 		}
@@ -114,6 +117,22 @@ decl_module! {
 			let car: Car = Self::cars(car_id).ok_or(Error::<T>::CarDoesNotExist)?;
 
 			SubscribedCars::<T>::insert(&driver, car_id, &car);
+
+			Self::deposit_event(RawEvent::CarSubscribed(driver, car));
+
+			Ok(())
+		}
+
+		#[weight = 10_000 + T::DbWeight::get().writes(1)]
+		pub fn remove_reserved_car(origin) -> DispatchResult {
+			let driver = ensure_signed(origin)?;
+
+			let drivers = Self::drivers();
+			ensure!(drivers.contains(&driver), Error::<T>::NotADriver);
+
+			SubscribedCars::<T>::remove_prefix(&driver);
+
+			Self::deposit_event(RawEvent::CarRemovedForDriver(driver));
 
 			Ok(())
 		}
