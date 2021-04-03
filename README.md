@@ -1,3 +1,11 @@
+# Track car rental pallet
+
+A Basic pallet that demonstarte simple use of different storage items type.
+This pallet shows several Extrinsics to modify the state of the implemented storage items.
+
+Presentation of differents storage Items :
+https://docs.google.com/presentation/d/1QulXgb2bgeNvcOP1hsaHYL_ncl0sXuwpD5ibq48TA6U/edit?usp=sharing
+
 # Substrate Node Template
 
 A fresh FRAME-based [Substrate](https://www.substrate.io/) node, ready for hacking :rocket:
