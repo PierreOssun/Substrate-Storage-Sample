@@ -103,6 +103,7 @@ decl_module! {
 			Cars::insert(current_id, new_car.clone());
 
 			Self::deposit_event(RawEvent::CarCreated(driver, new_car));
+			
 			Ok(())
 		}
 
@@ -148,6 +149,9 @@ impl<T: Config> Module<T> {
 		})
 	}
 
+	// Do not loop over a storage call in Production ! 
+	// If the list is too long and take more time to precess than the production time
+	// of a block, the blockchain will stop working. For example only
 	fn get_car_id(model_name: Vec<u8>) -> sp_std::result::Result<u32, DispatchError> {
 		for i in 0..Self::next_car_id() {
 			let car = Self::cars(i);
